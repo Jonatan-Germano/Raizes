@@ -1,0 +1,2 @@
+ALTER TABLE produtos
+ADD COLUMN estoque INTEGER NOT NULL CHECK (estoque > 0);
