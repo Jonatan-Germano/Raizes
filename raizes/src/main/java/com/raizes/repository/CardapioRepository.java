@@ -14,5 +14,4 @@ public interface CardapioRepository extends JpaRepository<Cardapio, UUID> {
 
     Page<Cardapio> findAllByAtivoTrue(Pageable pageable);
 
-    Boolean findAtivoById(UUID uuid);
 }

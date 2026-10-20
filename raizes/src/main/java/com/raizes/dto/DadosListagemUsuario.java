@@ -11,4 +11,5 @@ public record DadosListagemUsuario(UUID id,
     public DadosListagemUsuario(Usuario usuario) {
         this(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getTelefone(),  usuario.getAtivo());
     }
+
 }

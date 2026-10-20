@@ -1,5 +1,4 @@
 package com.raizes.service;
-
 import com.raizes.dto.*;
 import com.raizes.exception.PedidoException;
 import com.raizes.model.*;
@@ -41,7 +40,7 @@ public class PedidoService {
                     itemDTO.id()
             ).orElseThrow(() ->
                     new EntityNotFoundException(
-                            "Prato: " + itemDTO.nome() + " não encontrado: "
+                            "Erro: " + itemDTO.nome() + " não encontrado: "
                                     + itemDTO.id()
                     )
             );
@@ -80,6 +79,8 @@ public class PedidoService {
                     new EntityNotFoundException(
                             "Prato não encontrado: " + dados.idProduto()));
             prato.atualizarEstoque(pedido.getItens().getFirst().getQuantidade());
+        } else {
+            throw new PedidoException("Pagamento recusado");
         }
         return new DadosListagemPedido(pedido);
     }

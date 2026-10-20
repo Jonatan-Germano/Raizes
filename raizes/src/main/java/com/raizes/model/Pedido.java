@@ -1,13 +1,14 @@
 package com.raizes.model;
 
+import com.raizes.dto.DadosCadastroPedido;
 import com.raizes.exception.PedidoException;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.math.BigDecimal;
@@ -21,12 +22,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "UUID DEFAULT uuidv7()", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @NotNull
@@ -62,7 +62,7 @@ public class Pedido {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "canal_pedido", columnDefinition = "VARCHAR CHECK (canal_pedido IN ('APP', 'TOTEM', 'BALCAO', 'PICKUP', 'WEB')")
+    @Column(name = "canal_pedido")
     private CanalPedido canalPedido;
 
     public Pedido(Integer numero, Usuario usuario, CanalPedido canalPedido, List<ItemPedido> itens, FormaPagamento formaPagamento) {
@@ -79,6 +79,11 @@ public class Pedido {
             item.vincularPedido(this);
         }
         this.valorTotal = calcularTotal();
+    }
+
+    public Pedido(@Valid DadosCadastroPedido dados) {
+        this.numero = dados.numero();
+
     }
 
     private BigDecimal calcularTotal() {
@@ -98,6 +103,13 @@ public class Pedido {
                     "Pedido não possui pagamento"
             );
         }
+        if (this.status == Status.CANCELADO){
+            throw new PedidoException("Este pedido foi cancelado");
+        }
+//        if (this.status == Status.PAGO) {
+//            throw new PedidoException("Este pedido já foi pago");
+//        }
+
         this.statusPagamento = statusPagamento;
         if(this.statusPagamento == StatusPagamento.PAGO) {
             this.status = Status.PAGO;

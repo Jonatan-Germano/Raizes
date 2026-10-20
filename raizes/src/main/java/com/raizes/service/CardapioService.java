@@ -46,9 +46,8 @@ public class CardapioService {
 
     @Transactional
     public void excluir(DadosExclusaoCardapio dados) {
-        if(!repository.existsById(dados.id())){
-            throw new EntityNotFoundException("Prato não encontrado com o ID: " + dados.id());
-        }
+        repository.findById(dados.id())
+                .orElseThrow(EntityNotFoundException::new);
         repository.deleteById(dados.id());
     }
 }

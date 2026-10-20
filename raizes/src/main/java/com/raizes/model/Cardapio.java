@@ -22,7 +22,7 @@ public class Cardapio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "UUID DEFAULT uuidv7()", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @NotBlank
@@ -52,6 +52,15 @@ public class Cardapio {
         this.ativo = true;
     }
 
+    public Cardapio(String nome, String descricao, BigDecimal bigDecimal, String categoria, Integer estoque, Boolean ativo) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = bigDecimal;
+        this.categoria = categoria;
+        this.estoque = estoque;
+        this.ativo = ativo;
+    }
+
     public void atualizar(@Valid DadosAtualizacaoCardapio dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
@@ -75,5 +84,10 @@ public class Cardapio {
 
     public void atualizarEstoque(Integer quantidade) {
         this.estoque = estoque - quantidade;
+    }
+
+    public void inativar() {
+        this.nome = "Prato inativo";
+        this.ativo = false;
     }
 }

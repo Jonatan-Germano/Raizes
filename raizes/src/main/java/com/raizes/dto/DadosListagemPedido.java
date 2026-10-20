@@ -21,10 +21,8 @@ public record DadosListagemPedido(UUID id,
         this(pedido.getId(), pedido.getNumero(), pedido.getHorario(),
                 pedido.getStatus(), pedido.getItens().stream()
                         .map(item -> new DadosItemPedido(
-                                item.getProduto().getId(),
-                                item.getProduto() != null
-                                        ? item.getProduto().getNome()
-                                        : null,
+                                item.getProduto() != null ? item.getProduto().getId() : null,
+                                item.getProduto() != null ? item.getProduto().getNome() : null,
                                 item.getQuantidade()
                         ))
                         .toList(), pedido.getUsuario(), pedido.getCanalPedido(),

@@ -36,9 +36,8 @@ public class PedidoController {
     public ResponseEntity<DadosListagemPedido> autorizarPagamento(
             @PathVariable UUID id,
             @RequestBody ConfirmacaoPagamentoDTO dados) {
-
-        DadosListagemPedido pedidoAtualizado = service.autorizarPagamento(id, dados);
-        return ResponseEntity.ok(pedidoAtualizado);
+        DadosListagemPedido pedidoAutorizado = service.autorizarPagamento(id, dados);
+        return ResponseEntity.ok(pedidoAutorizado);
     }
 
     @GetMapping

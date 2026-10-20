@@ -47,9 +47,8 @@ public class UsuarioService {
 
     @Transactional
     public void excluir(DadosExclusaoUsuario dados){
-        if (!repository.existsById(dados.id())) {
-            throw new EntityNotFoundException("Usuario não encontrado.");
-        }
+        repository.findById(dados.id())
+                        .orElseThrow(EntityNotFoundException::new);
         repository.deleteById(dados.id());
     }
 }

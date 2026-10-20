@@ -5,11 +5,11 @@ import com.raizes.repository.UsuarioRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidadoUsuarioAtivo implements ValidadorPedido {
+public class ValidadorUsuarioAtivo implements ValidadorPedido {
 
     private final UsuarioRepository repository;
 
-    public ValidadoUsuarioAtivo(UsuarioRepository repository) {
+    public ValidadorUsuarioAtivo(UsuarioRepository repository) {
         this.repository = repository;
     }
 
